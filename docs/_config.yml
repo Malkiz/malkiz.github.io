@@ -10,5 +10,4 @@ plugins:
   - jekyll-feed
   - jekyll-seo-tag
 
-author:
-  name: Malkiz
+author: Malkiz
