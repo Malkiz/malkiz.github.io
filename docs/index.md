@@ -1,6 +1,6 @@
 ---
 layout: home
-title: Welcome
+title: Home
 ---
 
 👋 Hi! I'm Malkiz. This blog documents my journey building open-source tools, exploring new technologies, and learning in public.
