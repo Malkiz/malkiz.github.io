@@ -1,0 +1,14 @@
+title: Malkiz’s Dev Blog
+description: Sharing thoughts and progress on my personal projects.
+baseurl: ""
+url: "https://malkiz.github.io"
+
+theme: minima
+
+markdown: kramdown
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+author:
+  name: Malkiz
