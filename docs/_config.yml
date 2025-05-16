@@ -4,6 +4,7 @@ baseurl: ""
 url: "https://malkiz.github.io"
 
 theme: minima
+timezone: Asia/Jerusalem
 
 markdown: kramdown
 plugins:
