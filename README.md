@@ -6,3 +6,6 @@
 
 📍 https://malkiz.github.io
 
+## TODO
+
+Watch this video and use a better theme and configs - https://www.youtube.com/watch?v=7SBXl94xNl8
