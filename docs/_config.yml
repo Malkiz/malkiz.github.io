@@ -1,4 +1,5 @@
 title: Malkiz’s Dev Blog
+author: Malkiz
 description: Sharing thoughts and progress on my personal projects.
 baseurl: ""
 url: "https://malkiz.github.io"
@@ -12,4 +13,6 @@ plugins:
   - jekyll-feed
   - jekyll-seo-tag
 
-author: Malkiz
+sass:
+  quiet_deps: true
+  silence_deprecations: [import]
