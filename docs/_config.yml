@@ -5,6 +5,7 @@ url: "https://malkiz.github.io"
 
 theme: minima
 timezone: Asia/Jerusalem
+permalink: /:year/:month/:day/:title/
 
 markdown: kramdown
 plugins:
