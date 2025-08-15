@@ -16,8 +16,8 @@ A comments section is not a novel idea for a blog. I don't think I need to convi
 That said, it turns out adding a comments section to a Jekyll website is not so simple.
 
 A Jekyll site is a static site. That means that during the deployment process (which runs via Github Actions
-every time I push a new commit to the repo - see [How Blog]({% post_url 2025-05-16-how-blog %}) for details) 
-we create all the static files of the website and upload them to somewhere to be served statically.
+every time I push a new commit to the repo) we create all the static files of the website and upload them to 
+somewhere to be served statically.
 
 This process doesn't really lend itself to having comments, because adding a comment is not a new commit,
 which means it doesn't trigger a new deployment.
