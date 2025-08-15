@@ -16,3 +16,5 @@ plugins:
 sass:
   quiet_deps: true
   silence_deprecations: [import]
+
+apps_script_url: "https://script.google.com/macros/s/AKfycbzVj4_s9H00666qISYe0SqwEynvC9jhvbsg2s6gUOXZat5E_CIKRRy45KtQBASTbujj/exec"

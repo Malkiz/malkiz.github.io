@@ -40,7 +40,7 @@ layout: default
     <hr>
     <h3>Comments</h3>
     <div id="comments-list"></div>
-    <form id="comment-form" method="POST" action="https://script.google.com/macros/s/AKfycbzVj4_s9H00666qISYe0SqwEynvC9jhvbsg2s6gUOXZat5E_CIKRRy45KtQBASTbujj/exec">
+    <form id="comment-form" method="POST" action="{{ site.apps_script_url }}">
       <input type="hidden" name="post" value="{{ page.url | absolute_url }}">
       <label for="name">Name:</label>
       <input type="text" id="name" name="name" required><br>
@@ -57,7 +57,7 @@ layout: default
   document.addEventListener('DOMContentLoaded', () => {
     const commentsList = document.getElementById('comments-list');
     const commentForm = document.getElementById('comment-form');
-    const appsScriptUrl = 'https://script.google.com/macros/s/AKfycbzVj4_s9H00666qISYe0SqwEynvC9jhvbsg2s6gUOXZat5E_CIKRRy45KtQBASTbujj/exec';
+    const appsScriptUrl = '{{ site.apps_script_url }}';
 
     function sanitizeHTML(str) {
       return str.replace(/&/g, '&amp;')
