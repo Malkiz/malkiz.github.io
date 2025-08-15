@@ -17,4 +17,4 @@ sass:
   quiet_deps: true
   silence_deprecations: [import]
 
-apps_script_url: "https://script.google.com/macros/s/AKfycbzFrcGuDmi9yFw7aRDtgP0QFTLijxH5CNQ-K7hu5_JZgBN0mdkzgsflvH0lEOArmyGo/exec"
+apps_script_url: "https://script.google.com/macros/s/AKfycbyVdqrpCrHdvahS-5KbUL2w4jUeJQ6v--MEfyD0xL5PkWt9-Chtn_XgRT5tL7TDH4G0/exec"

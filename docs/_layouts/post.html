@@ -70,10 +70,11 @@ layout: default
     // Function to fetch and display comments
     const fetchComments = async () => {
       try {
-        const response = await fetch(appsScriptUrl);
+        const currentPostUrl = '{{ page.url | absolute_url }}';
+        const urlWithParams = `${appsScriptUrl}?post=${encodeURIComponent(currentPostUrl)}`;
+        const response = await fetch(urlWithParams);
         const data = await response.json();
         const comments = data.data;
-        const currentPostUrl = '{{ page.url | absolute_url }}';
 
         commentsList.innerHTML = ''; // Clear previous comments
 
