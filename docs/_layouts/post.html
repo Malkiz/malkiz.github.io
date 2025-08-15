@@ -59,6 +59,14 @@ layout: default
     const commentForm = document.getElementById('comment-form');
     const appsScriptUrl = 'https://script.google.com/macros/s/AKfycbzVj4_s9H00666qISYe0SqwEynvC9jhvbsg2s6gUOXZat5E_CIKRRy45KtQBASTbujj/exec';
 
+    function sanitizeHTML(str) {
+      return str.replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+    }
+
     // Function to fetch and display comments
     const fetchComments = async () => {
       try {
@@ -76,8 +84,8 @@ layout: default
             const commentDiv = document.createElement('div');
             commentDiv.className = 'comment';
             commentDiv.innerHTML = `
-              <strong>${comment.name}</strong> on ${new Date(comment.timestamp).toLocaleDateString()}<br>
-              <p>${comment.comment}</p>
+              <strong>${sanitizeHTML(comment.name)}</strong> on ${new Date(sanitizeHTML(comment.timestamp)).toLocaleDateString()}<br>
+              <p>${sanitizeHTML(comment.comment)}</p>
               <hr>
             `;
             commentsList.appendChild(commentDiv);
