@@ -1,75 +1,33 @@
----
-layout: default
----
-<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+<div id="comments-section">
+  <hr>
+  <h2>Comments</h2>
 
-  <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">{{ page.title | escape }}</h1>
-    <div class="post-meta">
-      {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
-      {% assign pdate = page.date | date_to_xmlschema %}
-      {%- if page.modified_date %}<span class="meta-label">Published:</span>{% endif %}
-      <time class="dt-published" datetime="{{ pdate }}" itemprop="datePublished">
-        {{ pdate | date: date_format }}
-      </time>
-      {%- if page.modified_date -%}
-        <span class="bullet-divider">•</span>
-        <span class="meta-label">Updated:</span>
-        {%- assign mdate = page.modified_date | date_to_xmlschema %}
-        <time class="dt-modified" datetime="{{ mdate }}" itemprop="dateModified">
-          {{ mdate | date: date_format }}
-        </time>
-      {%- endif -%}
-      {%- if page.author %}
-      <div class="{% unless page.modified_date %}force-inline {% endunless %}post-authors">
-        {%- for author in page.author %}
-          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
-            <span class="p-author h-card" itemprop="name">{{ author }}</span></span>
-          {%- if forloop.last == false %}, {% endif -%}
-        {% endfor %}
-      </div>
-      {%- endif %}
-    </div>
-  </header>
-
-  <div class="post-content e-content" itemprop="articleBody">
-    {{ content }}
+  <!-- Comments List -->
+  <div id="comments-list" style="padding-left: 1rem;">
+    <!-- Comments will be loaded here by JavaScript -->
+    <p id="loading-message">Loading comments...</p>
   </div>
 
-  <!-- Comments Section -->
-  <div id="comments-section">
-    <hr>
-    <h2>Comments</h2>
-
-    <!-- Comments List -->
-    <div id="comments-list" style="padding-left: 1rem;">
-      <!-- Comments will be loaded here by JavaScript -->
-      <p id="loading-message">Loading comments...</p>
+  <!-- Add New Comment Form -->
+  <h3>Add a New Comment</h3>
+  <form id="comment-form">
+    <div>
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
     </div>
+    <div>
+      <label for="comment">Comment:</label>
+      <textarea id="comment-text" name="comment" rows="5" required style="width: 100%;"></textarea>
+    </div>
+    <input type="hidden" id="post" name="post" value="{{ page.url | relative_url }}">
 
-    <!-- Add New Comment Form -->
-    <h3>Add a New Comment</h3>
-    <form id="comment-form">
-      <div>
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-      </div>
-      <div>
-        <label for="comment">Comment:</label>
-        <textarea id="comment-text" name="comment" rows="5" required style="width: 100%;"></textarea>
-      </div>
-      <input type="hidden" id="post" name="post" value="{{ page.url | relative_url }}">
+    <button type="submit">
+      Submit Comment
+    </button>
+  </form>
 
-      <button type="submit">
-        Submit Comment
-      </button>
-    </form>
-
-    <div id="status-message"></div>
-  </div>
-
-  <a class="u-url" href="{{ page.url | relative_url }}" hidden></a>
-</article>
+  <div id="status-message"></div>
+</div>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
@@ -122,7 +80,7 @@ layout: default
 
     const nameInput = document.getElementById('name');
     const commentTextarea = document.getElementById('comment-text');
-    const submitButton = commentForm.querySelector('#comment-form button[type="submit"]');
+    const submitButton = commentForm.querySelector('button[type="submit"]');
 
     // Handle form submission
     commentForm.addEventListener('submit', async (e) => {
