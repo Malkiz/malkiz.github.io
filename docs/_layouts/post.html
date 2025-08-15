@@ -36,18 +36,36 @@ layout: default
     {{ content }}
   </div>
 
-  <div id="comments">
+  <!-- Comments Section -->
+  <div id="comments-section">
     <hr>
-    <h3>Comments</h3>
-    <div id="comments-list"></div>
-    <form id="comment-form" method="POST" action="{{ site.apps_script_url }}">
-      <input type="hidden" name="post" value="{{ page.url | absolute_url }}">
-      <label for="name">Name:</label>
-      <input type="text" id="name" name="name" required><br>
-      <label for="comment">Comment:</label>
-      <textarea id="comment" name="comment" required></textarea><br>
-      <button type="submit">Submit Comment</button>
+    <h2>Comments</h2>
+
+    <!-- Comments List -->
+    <div id="comments-list" style="padding-left: 1rem;">
+      <!-- Comments will be loaded here by JavaScript -->
+      <p id="loading-message">Loading comments...</p>
+    </div>
+
+    <!-- Add New Comment Form -->
+    <h3>Add a New Comment</h3>
+    <form id="comment-form">
+      <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div>
+        <label for="comment">Comment:</label>
+        <textarea id="comment-text" name="comment" rows="5" required style="width: 100%;"></textarea>
+      </div>
+      <input type="hidden" id="post" name="post" value="{{ page.url | absolute_url }}">
+
+      <button type="submit">
+        Submit Comment
+      </button>
     </form>
+
+    <div id="status-message"></div>
   </div>
 
   <a class="u-url" href="{{ page.url | relative_url }}" hidden></a>
@@ -57,15 +75,8 @@ layout: default
   document.addEventListener('DOMContentLoaded', () => {
     const commentsList = document.getElementById('comments-list');
     const commentForm = document.getElementById('comment-form');
+    const statusMessage = document.getElementById('status-message');
     const appsScriptUrl = '{{ site.apps_script_url }}';
-
-    function sanitizeHTML(str) {
-      return str.replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;')
-                .replace(/'/g, '&#039;');
-    }
 
     // Function to fetch and display comments
     const fetchComments = async () => {
@@ -83,12 +94,22 @@ layout: default
         if (filteredComments.length > 0) {
           filteredComments.forEach(comment => {
             const commentDiv = document.createElement('div');
-            commentDiv.className = 'comment';
-            commentDiv.innerHTML = `
-              <strong>${sanitizeHTML(comment.name)}</strong> on ${new Date(sanitizeHTML(comment.timestamp)).toLocaleDateString()}<br>
-              <p>${sanitizeHTML(comment.comment)}</p>
-              <hr>
-            `;
+
+            const name = document.createElement('strong');
+            name.textContent = comment.name;
+            const date = document.createElement('span');
+            date.textContent = new Date(comment.timestamp).toLocaleDateString();
+            const nameAndDate = document.createElement('p');
+            nameAndDate.appendChild(name);
+            nameAndDate.appendChild(document.createTextNode(' on '));
+            nameAndDate.appendChild(date);
+
+            const commentText = document.createElement('p');
+            commentText.style = 'padding-left: 1rem;';
+            commentText.textContent = comment.comment;
+
+            commentDiv.appendChild(nameAndDate);
+            commentDiv.appendChild(commentText);
             commentsList.appendChild(commentDiv);
           });
         } else {
@@ -99,10 +120,21 @@ layout: default
       }
     };
 
+    const nameInput = document.getElementById('name');
+    const commentTextarea = document.getElementById('comment-text');
+    const submitButton = commentForm.querySelector('#comment-form button[type="submit"]');
+
     // Handle form submission
     commentForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const formData = new URLSearchParams(new FormData(commentForm));
+
+      // Disable the fields and button
+      nameInput.disabled = true;
+      commentTextarea.disabled = true;
+      submitButton.disabled = true;
+
+      statusMessage.textContent = 'Submitting...';
 
       try {
         const response = await fetch(appsScriptUrl, {
@@ -111,14 +143,19 @@ layout: default
         });
 
         if (response.ok) {
-          alert('Comment submitted successfully! It may take a moment to appear.');
+          statusMessage.textContent = 'Comment submitted successfully! It may take a moment to appear.';
           commentForm.reset();
           fetchComments(); // Refresh comments list
         } else {
-          alert('Error submitting comment.');
+          statusMessage.textContent = 'Error submitting comment. Please try again later.';
         }
       } catch (error) {
         console.error('Submission error:', error);
+      } finally {
+        // Re-enable the fields and button
+        nameInput.disabled = false;
+        commentTextarea.disabled = false;
+        submitButton.disabled = false;
       }
     });
 
